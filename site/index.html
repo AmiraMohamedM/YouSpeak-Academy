@@ -1,0 +1,1965 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YouSpeak English Academy | تذكرتك للطلاقة</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700&family=Sora:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --navy-900: #0a1740;
+        --navy-800: #0f1f4f;
+        --navy-700: #152a63;
+        --navy-600: #1d3a82;
+        --red-600: #e2313d;
+        --red-700: #c41e2a;
+        --gold-400: #f4b23a;
+        --cream-50: #faf7f0;
+        --cream-100: #f2ede1;
+        --ink-900: #161a2e;
+        --paper: #ffffff;
+        --line: rgba(10, 23, 64, 0.12);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Tajawal", sans-serif;
+        background: var(--cream-50);
+        color: var(--ink-900);
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+      h1,
+      h2,
+      h3,
+      .display {
+        font-family: "Cairo", sans-serif;
+        font-weight: 800;
+      }
+      .latin {
+        font-family: "Sora", sans-serif;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .container {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      img,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+
+      /* ---------- reduced motion ---------- */
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.001s !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001s !important;
+        }
+      }
+
+      /* ---------- focus ---------- */
+      a:focus-visible,
+      button:focus-visible {
+        outline: 3px solid var(--gold-400);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+
+      /* ================= HEADER ================= */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(10, 23, 64, 0.92);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 0;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .brand-name {
+        font-family: "Sora", sans-serif;
+        font-weight: 700;
+        font-size: 22px;
+        color: #fff;
+        letter-spacing: -0.02em;
+      }
+      .brand-name span {
+        color: var(--red-600);
+      }
+      .brand-logo {
+        width: 34px;
+        height: 34px;
+        object-fit: contain;
+        background: transparent;
+      }
+      .nav-links {
+        display: flex;
+        gap: 28px;
+        align-items: center;
+      }
+      .nav-links a {
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 15px;
+        font-weight: 500;
+        transition: color 0.2s;
+        position: relative;
+      }
+      .nav-links a:hover {
+        color: #fff;
+      }
+      .nav-links a.current:not(.nav-cta) {
+        color: #fff;
+      }
+      .nav-links a.current:not(.nav-cta)::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        left: 0;
+        bottom: -8px;
+        height: 2px;
+        background: var(--gold-400);
+      }
+      .nav-cta {
+        background: var(--red-600);
+        color: #fff !important;
+        padding: 10px 22px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 14px;
+        box-shadow: 0 6px 16px rgba(226, 49, 61, 0.35);
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .nav-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(226, 49, 61, 0.45);
+      }
+      .nav-toggle {
+        display: none;
+      }
+
+      @media (max-width: 860px) {
+        .nav-links {
+          position: fixed;
+          inset: 64px 0 auto 0;
+          flex-direction: column;
+          align-items: flex-start;
+          background: var(--navy-900);
+          padding: 20px 24px;
+          gap: 18px;
+          transform: translateY(-120%);
+          transition: transform 0.3s ease;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .nav-links.open {
+          transform: translateY(0);
+        }
+        .nav-toggle {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 8px;
+        }
+        .nav-toggle span {
+          width: 24px;
+          height: 2px;
+          background: #fff;
+          border-radius: 2px;
+        }
+      }
+
+      /* ================= HERO ================= */
+      .hero {
+        position: relative;
+        background:
+          radial-gradient(
+            1100px 600px at 80% -10%,
+            rgba(226, 49, 61, 0.25),
+            transparent 60%
+          ),
+          linear-gradient(
+            180deg,
+            var(--navy-900) 0%,
+            var(--navy-800) 55%,
+            var(--navy-700) 100%
+          );
+        color: #fff;
+        padding: 90px 0 120px;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.06) 1px,
+          transparent 1px
+        );
+        background-size: 26px 26px;
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      .hero-grid {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 50px;
+        align-items: center;
+      }
+      .eyebrow {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        padding: 8px 20px;
+        border-radius: 999px;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--gold-400);
+        margin-bottom: 22px;
+      }
+      .eyebrow::before,
+      .eyebrow::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 12px;
+        height: 12px;
+        background: var(--navy-900);
+        border-radius: 50%;
+      }
+      .eyebrow::before {
+        right: -6px;
+      }
+      .eyebrow::after {
+        left: -6px;
+      }
+      .hero h1 {
+        font-size: clamp(34px, 5vw, 58px);
+        line-height: 1.15;
+        margin-bottom: 20px;
+      }
+      .hero h1 em {
+        font-style: normal;
+        color: var(--red-600);
+        position: relative;
+      }
+      .hero p.lead {
+        font-size: 18px;
+        line-height: 1.8;
+        color: rgba(255, 255, 255, 0.82);
+        max-width: 520px;
+        margin-bottom: 34px;
+      }
+      .hero-ctas {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 15px 28px;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .btn-primary {
+        background: var(--red-600);
+        color: #fff;
+        box-shadow: 0 10px 24px rgba(226, 49, 61, 0.4);
+      }
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 14px 28px rgba(226, 49, 61, 0.5);
+      }
+      .btn-ghost {
+        background: transparent;
+        color: #fff;
+        border: 1.5px solid rgba(255, 255, 255, 0.35);
+      }
+      .btn-ghost:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: #fff;
+      }
+
+      /* door + ticket signature icon */
+      .door-scene {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 420px;
+      }
+      .door-ring {
+        position: absolute;
+        width: 340px;
+        height: 340px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.18);
+      }
+      .door-ring::after {
+        content: "";
+        position: absolute;
+        inset: -40px;
+        border-radius: 50%;
+        border: 1px dashed rgba(244, 178, 58, 0.35);
+        animation: spin 40s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .door {
+        position: relative;
+        width: 130px;
+        height: 230px;
+        background: linear-gradient(160deg, #1d3a82, #0f1f4f);
+        border-radius: 6px 34px 6px 6px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+        transform-origin: right center;
+        animation: swing 3.4s ease-in-out infinite;
+      }
+      @keyframes swing {
+        0%,
+        100% {
+          transform: perspective(600px) rotateY(0deg);
+        }
+        50% {
+          transform: perspective(600px) rotateY(24deg);
+        }
+      }
+      .door::before {
+        /* handle */
+        content: "";
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        width: 6px;
+        height: 22px;
+        background: rgba(255, 255, 255, 0.65);
+        border-radius: 3px;
+        transform: translateY(-50%);
+      }
+      .door::after {
+        /* window */
+        content: "";
+        position: absolute;
+        left: 26px;
+        right: 26px;
+        top: 32px;
+        height: 70px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 4px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+      }
+      .ticket-fly {
+        position: absolute;
+        left: calc(50% - 4px);
+        top: 46%;
+        width: 150px;
+        height: 56px;
+        background: linear-gradient(135deg, var(--red-600), var(--red-700));
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        box-shadow: 0 14px 30px rgba(226, 49, 61, 0.45);
+        animation: slide 3.4s ease-in-out infinite;
+      }
+      .ticket-fly::before,
+      .ticket-fly::after {
+        content: "";
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        background: var(--navy-900);
+        border-radius: 50%;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .ticket-fly::before {
+        right: -7px;
+      }
+      .ticket-fly::after {
+        left: -7px;
+      }
+      .ticket-fly .bars {
+        display: flex;
+        align-items: flex-end;
+        gap: 3px;
+        height: 22px;
+      }
+      .ticket-fly .bars i {
+        display: block;
+        width: 3px;
+        background: #fff;
+        border-radius: 2px;
+      }
+      @keyframes slide {
+        0%,
+        100% {
+          transform: translateX(38px) rotate(0deg);
+        }
+        50% {
+          transform: translateX(-18px) rotate(-6deg);
+        }
+      }
+
+      @media (max-width: 900px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+        }
+        .door-scene {
+          height: 280px;
+          margin-top: 20px;
+        }
+        .door {
+          width: 100px;
+          height: 170px;
+        }
+        .door-ring {
+          width: 250px;
+          height: 250px;
+        }
+      }
+
+      /* ================= SECTION UTIL ================= */
+      section {
+        padding: 96px 0;
+      }
+      .section-head {
+        max-width: 640px;
+        margin-bottom: 50px;
+      }
+      .kicker {
+        color: var(--red-600);
+        font-weight: 700;
+        font-size: 14px;
+        letter-spacing: 0.02em;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+      .kicker::before {
+        content: "";
+        width: 26px;
+        height: 3px;
+        background: var(--red-600);
+        border-radius: 2px;
+      }
+      .section-head h2 {
+        font-size: clamp(28px, 3.6vw, 40px);
+        color: var(--navy-900);
+        line-height: 1.25;
+      }
+      .section-head p {
+        margin-top: 14px;
+        font-size: 17px;
+        color: #4a4f66;
+        line-height: 1.8;
+      }
+
+      /* ================= PROBLEM BANNER ================= */
+      .problem {
+        background: var(--navy-900);
+        color: #fff;
+        text-align: center;
+        padding: 64px 0;
+        position: relative;
+      }
+      .problem h3 {
+        font-size: clamp(24px, 4vw, 36px);
+        line-height: 1.5;
+      }
+      .problem h3 .hi {
+        color: var(--gold-400);
+      }
+      .problem p {
+        margin-top: 16px;
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 16px;
+        max-width: 600px;
+        margin-inline: auto;
+      }
+
+      /* ================= SKILLS / BOOTH ================= */
+      .booth-wrap {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+      }
+      .booth-illustration {
+        background: linear-gradient(160deg, var(--navy-800), var(--navy-700));
+        border-radius: 24px;
+        padding: 14px;
+        position: relative;
+        overflow: hidden;
+        min-height: 360px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .booth-illustration::before {
+        content: "PRACTICE BOOTH";
+        position: absolute;
+        top: 22px;
+        right: 28px;
+        z-index: 2;
+        font-family: "Sora", sans-serif;
+        letter-spacing: 0.12em;
+        font-size: 12px;
+        font-weight: 700;
+        color: #fff;
+        background: rgba(10, 23, 64, 0.55);
+        padding: 6px 12px;
+        border-radius: 999px;
+        backdrop-filter: blur(4px);
+      }
+      .booth-photo {
+        width: 100%;
+        height: 100%;
+        max-height: 520px;
+        object-fit: cover;
+        border-radius: 16px;
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+      }
+
+      .skill-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .skill-card {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 22px;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .skill-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 30px rgba(10, 23, 64, 0.08);
+      }
+      .skill-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 14px;
+        color: #fff;
+      }
+      .skill-icon.blue {
+        background: var(--navy-700);
+      }
+      .skill-icon.red {
+        background: var(--red-600);
+      }
+      .skill-card h4 {
+        font-family: "Cairo", sans-serif;
+        font-weight: 700;
+        font-size: 18px;
+        margin-bottom: 6px;
+        color: var(--navy-900);
+      }
+      .skill-card p {
+        font-size: 14.5px;
+        color: #5a5f74;
+        line-height: 1.7;
+      }
+
+      .why-list {
+        margin-top: 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .why-list li {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        font-size: 15px;
+        color: #3a3f56;
+      }
+      .why-list .check {
+        flex: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--gold-400);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        color: var(--navy-900);
+        font-weight: 800;
+        margin-top: 2px;
+      }
+
+      @media (max-width: 900px) {
+        .booth-wrap {
+          grid-template-columns: 1fr;
+        }
+        .skill-list {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      /* ================= PRICING ================= */
+      .pricing {
+        background: var(--cream-100);
+      }
+      .summer-banner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+        background: linear-gradient(120deg, var(--red-600), var(--red-700));
+        color: #fff;
+        border-radius: 18px;
+        padding: 24px 30px;
+        margin-bottom: 44px;
+        box-shadow: 0 18px 40px rgba(196, 30, 42, 0.28);
+      }
+      .summer-banner .txt strong {
+        font-family: "Cairo", sans-serif;
+        font-size: 22px;
+        display: block;
+      }
+      .summer-banner .txt span {
+        font-size: 14px;
+        opacity: 0.9;
+      }
+      .summer-badge {
+        background: var(--gold-400);
+        color: var(--navy-900);
+        font-weight: 800;
+        font-size: 13px;
+        padding: 8px 16px;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+
+      .plans {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 26px;
+      }
+      .ticket {
+        position: relative;
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 10px 26px rgba(10, 23, 64, 0.07);
+        padding: 30px 26px 26px;
+        border: 1px solid var(--line);
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.25s ease;
+      }
+      .ticket:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 40px rgba(10, 23, 64, 0.14);
+      }
+      .ticket.featured {
+        border: 2px solid var(--red-600);
+        transform: translateY(-10px);
+      }
+      .ticket.featured:hover {
+        transform: translateY(-14px);
+      }
+      .ribbon {
+        position: absolute;
+        top: -14px;
+        right: 26px;
+        background: var(--gold-400);
+        color: var(--navy-900);
+        font-size: 12px;
+        font-weight: 800;
+        padding: 6px 14px;
+        border-radius: 999px;
+        box-shadow: 0 6px 14px rgba(244, 178, 58, 0.4);
+      }
+      .plan-badge {
+        display: inline-block;
+        font-size: 13px;
+        font-weight: 700;
+        color: #fff;
+        background: var(--navy-800);
+        padding: 5px 14px;
+        border-radius: 999px;
+        margin-bottom: 14px;
+      }
+      .ticket.featured .plan-badge {
+        background: var(--red-600);
+      }
+      .ticket h3 {
+        font-size: 21px;
+        color: var(--navy-900);
+        margin-bottom: 8px;
+      }
+      .ticket .desc {
+        font-size: 14px;
+        color: #5a5f74;
+        line-height: 1.7;
+        margin-bottom: 18px;
+        min-height: 64px;
+      }
+
+      .perforation {
+        position: relative;
+        height: 1px;
+        margin: 18px 0 20px;
+        border-top: 2px dashed var(--line);
+      }
+      .perforation::before,
+      .perforation::after {
+        content: "";
+        position: absolute;
+        top: -9px;
+        width: 18px;
+        height: 18px;
+        background: var(--cream-100);
+        border-radius: 50%;
+      }
+      .ticket.featured .perforation::before,
+      .ticket.featured .perforation::after {
+        background: #fff;
+      }
+      .perforation::before {
+        right: -30px;
+      }
+      .perforation::after {
+        left: -30px;
+      }
+
+      .feature-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14.5px;
+        color: #3a3f56;
+        margin-bottom: 10px;
+      }
+      .feature-row .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--red-600);
+        flex: none;
+      }
+
+      .price-block {
+        margin-top: 16px;
+      }
+      .price-tabs {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 14px;
+      }
+      .price-tab {
+        flex: 1;
+        text-align: center;
+        font-size: 12.5px;
+        font-weight: 700;
+        padding: 7px 4px;
+        border-radius: 8px;
+        background: var(--cream-100);
+        color: #5a5f74;
+        cursor: pointer;
+        border: none;
+        font-family: "Tajawal", sans-serif;
+        transition:
+          background 0.18s,
+          color 0.18s;
+      }
+      .price-tab:hover {
+        background: rgba(10, 23, 64, 0.12);
+      }
+      .ticket.featured .price-tab.active,
+      .price-tab.active {
+        background: var(--navy-900);
+        color: #fff;
+      }
+      .ticket.featured .price-tab:hover {
+        background: rgba(255, 255, 255, 0.25);
+      }
+      .price-old-row {
+        min-height: 20px;
+        margin-bottom: 2px;
+      }
+      .price-main {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        margin-bottom: 4px;
+      }
+      .price-main .old {
+        font-size: 15px;
+        color: #9a9fb0;
+        text-decoration: line-through;
+      }
+      .price-main .new {
+        font-family: "Sora", sans-serif;
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--navy-900);
+      }
+      .price-main .cur {
+        font-size: 14px;
+        color: #5a5f74;
+        font-weight: 600;
+      }
+      .save-tag {
+        display: inline-block;
+        margin-top: 8px;
+        background: rgba(226, 49, 61, 0.1);
+        color: var(--red-700);
+        font-size: 12.5px;
+        font-weight: 700;
+        padding: 5px 12px;
+        border-radius: 999px;
+      }
+      .ticket .cta {
+        display: block;
+        text-align: center;
+        margin-top: 22px;
+        width: 100%;
+        padding: 13px;
+        border-radius: 10px;
+        background: var(--navy-900);
+        color: #fff;
+        font-weight: 700;
+        font-size: 15px;
+        border: none;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          transform 0.2s;
+      }
+      .ticket.featured .cta {
+        background: var(--red-600);
+      }
+      .ticket .cta:hover {
+        transform: translateY(-2px);
+      }
+
+      .bundle-table {
+        margin-top: 50px;
+        background: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+      }
+      .bundle-table table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14.5px;
+      }
+      .bundle-table th,
+      .bundle-table td {
+        padding: 16px 14px;
+        text-align: center;
+        border-bottom: 1px solid var(--line);
+      }
+      .bundle-table thead th {
+        background: var(--navy-900);
+        color: #fff;
+        font-weight: 700;
+      }
+      .bundle-table tbody tr:last-child td {
+        border-bottom: none;
+      }
+      .bundle-table td.hi {
+        color: var(--red-600);
+        font-weight: 800;
+      }
+
+      @media (max-width: 960px) {
+        .plans {
+          grid-template-columns: 1fr;
+          max-width: 420px;
+          margin-inline: auto;
+        }
+        .ticket.featured {
+          transform: none;
+        }
+        .bundle-table {
+          overflow-x: auto;
+        }
+      }
+
+      /* ================= TESTIMONIALS ================= */
+      .testi-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+      }
+      .bubble {
+        background: #fff;
+        border-radius: 18px;
+        padding: 26px;
+        border: 1px solid var(--line);
+        position: relative;
+        box-shadow: 0 8px 20px rgba(10, 23, 64, 0.05);
+      }
+      .bubble .heart {
+        color: var(--red-600);
+        font-size: 20px;
+      }
+      .bubble p {
+        font-size: 16px;
+        line-height: 1.8;
+        color: var(--ink-900);
+        margin: 12px 0 14px;
+      }
+      .bubble .time {
+        font-size: 12.5px;
+        color: #9a9fb0;
+      }
+      .bubble.rtl-bubble {
+        direction: rtl;
+      }
+      @media (max-width: 900px) {
+        .testi-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .testi-grid-img {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1080px;
+        margin: 0 auto;
+      }
+      .stars-row {
+        text-align: center;
+        color: var(--gold-400);
+        font-size: 22px;
+        letter-spacing: 4px;
+        margin-bottom: 22px;
+      }
+      .shot-card {
+        background: #fff;
+        border-radius: 20px;
+        padding: 10px;
+        border: 1px solid var(--line);
+        box-shadow: 0 14px 30px rgba(10, 23, 64, 0.08);
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.25s ease;
+      }
+      .shot-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 22px 40px rgba(10, 23, 64, 0.14);
+      }
+      .shot-card img {
+        width: 100%;
+        border-radius: 14px;
+        display: block;
+      }
+      @media (max-width: 900px) {
+        .testi-grid-img {
+          grid-template-columns: repeat(2, 1fr);
+          max-width: 760px;
+        }
+      }
+      @media (max-width: 700px) {
+        .testi-grid-img {
+          grid-template-columns: 1fr;
+          max-width: 420px;
+        }
+      }
+
+      /* ================= FINAL CTA ================= */
+      .final-cta {
+        background: linear-gradient(140deg, var(--navy-900), var(--navy-700));
+        color: #fff;
+        text-align: center;
+        padding: 100px 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .final-cta h2 {
+        font-size: clamp(28px, 4vw, 44px);
+        margin-bottom: 16px;
+      }
+      .final-cta p {
+        color: rgba(255, 255, 255, 0.75);
+        font-size: 17px;
+        margin-bottom: 34px;
+        max-width: 520px;
+        margin-inline: auto;
+      }
+      .contact-row {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      /* ================= FOOTER ================= */
+      footer {
+        background: var(--navy-900);
+        color: rgba(255, 255, 255, 0.6);
+        padding: 34px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .foot-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 14px;
+        font-size: 14px;
+      }
+      .foot-links {
+        display: flex;
+        gap: 20px;
+      }
+      .foot-links a:hover {
+        color: #fff;
+      }
+
+      /* ================= CHECKOUT MODAL ================= */
+      .checkout-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(10, 17, 40, 0.6);
+        backdrop-filter: blur(3px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        padding: 20px;
+      }
+      .checkout-overlay.open {
+        display: flex;
+      }
+      .checkout-box {
+        background: #fff;
+        border-radius: 20px;
+        width: 100%;
+        max-width: 440px;
+        max-height: 92vh;
+        overflow-y: auto;
+        padding: 30px 26px 26px;
+        position: relative;
+        box-shadow: 0 30px 70px rgba(0, 0, 0, 0.35);
+        animation: pop 0.22s ease;
+      }
+      @keyframes pop {
+        from {
+          transform: scale(0.94);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      .co-close {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        background: var(--cream-100);
+        border: none;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 14px;
+        color: var(--navy-900);
+      }
+      .co-close:hover {
+        background: var(--line);
+      }
+      .co-eyebrow {
+        color: var(--red-600);
+        font-weight: 700;
+        font-size: 13px;
+      }
+      .co-plan {
+        margin-top: 6px;
+        font-size: 22px;
+        color: var(--navy-900);
+      }
+      .co-price-row {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        margin-top: 8px;
+      }
+      .co-price {
+        font-family: "Sora", sans-serif;
+        font-weight: 800;
+        font-size: 26px;
+        color: var(--red-600);
+      }
+      .co-duration {
+        font-size: 14px;
+        color: #5a5f74;
+      }
+      .co-order {
+        margin-top: 10px;
+        font-size: 13px;
+        color: #5a5f74;
+        background: var(--cream-100);
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 8px;
+      }
+
+      .co-methods {
+        display: flex;
+        gap: 8px;
+        margin: 22px 0 16px;
+        background: var(--cream-100);
+        padding: 5px;
+        border-radius: 10px;
+      }
+      .co-tab {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: 9px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 14px;
+        color: #5a5f74;
+        cursor: pointer;
+        font-family: "Tajawal", sans-serif;
+        transition:
+          background 0.18s,
+          color 0.18s;
+      }
+      .co-tab.active {
+        background: var(--navy-900);
+        color: #fff;
+      }
+
+      .co-step {
+        font-size: 14.5px;
+        color: #3a3f56;
+        line-height: 1.8;
+        margin-bottom: 10px;
+      }
+      .co-copy-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        background: var(--cream-100);
+        border-radius: 10px;
+        padding: 12px 14px;
+        margin-bottom: 14px;
+      }
+      .co-value {
+        font-weight: 700;
+        font-size: 16px;
+        color: var(--navy-900);
+      }
+      .co-copy {
+        background: var(--navy-900);
+        color: #fff;
+        border: none;
+        padding: 7px 14px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: "Tajawal", sans-serif;
+        transition: background 0.18s;
+        flex: none;
+      }
+      .co-copy.copied {
+        background: var(--red-600);
+      }
+
+      .co-final {
+        margin-top: 6px;
+      }
+      .co-confirm {
+        width: 100%;
+        justify-content: center;
+        margin-top: 6px;
+      }
+      .co-note {
+        margin-top: 14px;
+        font-size: 12.5px;
+        color: #9a9fb0;
+        text-align: center;
+        line-height: 1.7;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container nav">
+        <div class="brand">
+          <img
+            src="assets/logo-icon.png"
+            alt="شعار YouSpeak"
+            class="brand-logo"
+          />
+          <span class="brand-name latin">You<span>Speak</span></span>
+        </div>
+        <button
+          class="nav-toggle"
+          aria-label="فتح القائمة"
+          onclick="
+            document.querySelector('.nav-links').classList.toggle('open')
+          "
+        >
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="nav-links">
+          <a href="#booth">البرنامج</a>
+          <a href="#pricing">الأسعار</a>
+          <a href="#testimonials">آراء الطلاب</a>
+          <a href="#contact" class="nav-cta">احجز تذكرتك</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">🎟️ تذكرتك الحقيقية للطلاقة</span>
+          <h1>
+            دروس اللغة مش كفاية...<br />التمرين الحقيقي هو <em>اللي بيفرق</em>
+          </h1>
+          <p class="lead">
+            في YouSpeak مش بنكتفي بحفظ القواعد. بندخلك الـ Practice Booth،
+            مساحتك الخاصة للتمرن على التحدث والاستماع والقراءة والكتابة، لحد ما
+            تحس إنك فعلاً بقيت واثق من لغتك.
+          </p>
+          <div class="hero-ctas">
+            <a href="#pricing" class="btn btn-primary">شوف الخطط والأسعار</a>
+            <a href="#booth" class="btn btn-ghost"
+              >إيه هو الـ Practice Booth؟</a
+            >
+          </div>
+        </div>
+        <div class="door-scene" aria-hidden="true">
+          <div class="door-ring"></div>
+          <div class="door"></div>
+          <div class="ticket-fly">
+            <div class="bars">
+              <i style="height: 8px"></i><i style="height: 16px"></i
+              ><i style="height: 22px"></i> <i style="height: 12px"></i
+              ><i style="height: 18px"></i><i style="height: 8px"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="problem">
+      <div class="container">
+        <h3>محاضرات ال English <span class="hi">مش كفاية لوحدها</span>؟</h3>
+        <p>
+          التقدم الحقيقي بييجي من التمرين الحقيقي. عشان كدة بنقدملك مساحة تمرين
+          فردية، برة المحاضرة، تتمرن فيها على مهاراتك بنفسك وبإيقاعك.
+        </p>
+      </div>
+    </div>
+
+    <section id="booth">
+      <div class="container">
+        <div class="booth-wrap">
+          <div class="booth-illustration">
+            <img
+              src="assets/practice-booth.jpg"
+              alt="كابينة التدريب الفردية في YouSpeak"
+              class="booth-photo"
+            />
+          </div>
+          <div>
+            <div class="kicker">Practice Booth</div>
+            <h2>مساحتك الفردية لتتمرن وتتقن اللغة</h2>
+            <p
+              style="
+                margin-top: 14px;
+                font-size: 16px;
+                color: #4a4f66;
+                line-height: 1.8;
+              "
+            >
+              جلسات تدريب فردية خارج المحاضرة، مصممة تساعدك تطور مهاراتك الأربعة
+              الأساسية في اللغة الإنجليزية.
+            </p>
+            <div class="skill-list" style="margin-top: 26px">
+              <div class="skill-card">
+                <div class="skill-icon red">🎤</div>
+                <h4>تحدث</h4>
+                <p>عبّر عن نفسك بوضوح وثقة في أي موقف.</p>
+              </div>
+              <div class="skill-card">
+                <div class="skill-icon blue">🎧</div>
+                <h4>استمع</h4>
+                <p>درّب أذنك على الفهم بشكل أسرع وأدق.</p>
+              </div>
+              <div class="skill-card">
+                <div class="skill-icon blue">📖</div>
+                <h4>اقرأ</h4>
+                <p>ابنِ سرعة وثقة أكبر في القراءة.</p>
+              </div>
+              <div class="skill-card">
+                <div class="skill-icon red">✍️</div>
+                <h4>اكتب</h4>
+                <p>نظّم أفكارك واصقل مهاراتك الكتابية.</p>
+              </div>
+            </div>
+            <ul class="why-list">
+              <li>
+                <span class="check">✓</span> جلسات إضافية خارج جدول المحاضرات
+              </li>
+              <li>
+                <span class="check">✓</span> تمرين شخصي بحسب مستواك واحتياجك
+              </li>
+              <li><span class="check">✓</span> طلاقة وثقة أسرع في التحدث</li>
+              <li>
+                <span class="check">✓</span> تواصل فعّال وحقيقي في أي موقف
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="pricing">
+      <div class="container">
+        <div class="summer-banner">
+          <div class="txt">
+            <strong>☀️ عرض الصيف — اشترك 3 أشهر واحصل على خصم 20%</strong>
+            <span>وفّر حتى 1380 جنيه على خطتك. عرض لفترة محدودة!</span>
+          </div>
+          <span class="summer-badge">لا تفوّت الفرصة</span>
+        </div>
+
+        <div class="section-head">
+          <div class="kicker">الخطط والأسعار</div>
+          <h2>اختار التذكرة المناسبة لرحلتك</h2>
+          <p>
+            كل خطة بتشمل 8 جلسات أساسية + جلسات Practice Booth للتمرين الفردي
+            على حسب الخطة اللي تختارها.
+          </p>
+        </div>
+
+        <div class="plans">
+          <!-- Plan 1 -->
+          <div class="ticket">
+            <span class="plan-badge">الخطة 1</span>
+            <h3>بداية قوية</h3>
+            <p class="desc">
+              انطلاقة قوية لأي شخص يريد بناء أساس متين في اللغة الإنجليزية.
+            </p>
+            <div class="feature-row">
+              <span class="dot"></span> 8 جلسات أساسية
+            </div>
+            <div class="feature-row">
+              <span class="dot"></span> Practice Booth: جلستان
+            </div>
+            <div class="perforation"></div>
+            <div
+              class="price-block"
+              data-m1="1500"
+              data-m3="3600"
+              data-old3="4500"
+              data-save3="900"
+            >
+              <div class="price-tabs">
+                <button type="button" class="price-tab" data-mode="1">
+                  شهر واحد
+                </button>
+                <button type="button" class="price-tab active" data-mode="3">
+                  3 أشهر
+                </button>
+              </div>
+              <div class="price-old-row"></div>
+              <div class="price-main">
+                <span class="new latin js-price">3600</span
+                ><span class="cur">جنيه</span>
+              </div>
+              <span class="save-tag js-save">وفّر 900 جنيه</span>
+            </div>
+            <button
+              type="button"
+              class="cta"
+              onclick="openWhatsAppInquiry(this)"
+              data-plan="بداية قوية"
+            >
+              احجز الخطة دي
+            </button>
+          </div>
+
+          <!-- Plan 2 - featured -->
+          <div class="ticket featured">
+            <span class="ribbon">الأفضل قيمة</span>
+            <span class="plan-badge">الخطة 2</span>
+            <h3>الاختيار الأفضل</h3>
+            <p class="desc">تدريب أكثر، مهارات أقوى، ونتائج أفضل بشكل ملحوظ.</p>
+            <div class="feature-row">
+              <span class="dot"></span> 8 جلسات أساسية
+            </div>
+            <div class="feature-row">
+              <span class="dot"></span> Practice Booth: 4 جلسات
+            </div>
+            <div class="perforation"></div>
+            <div
+              class="price-block"
+              data-m1="1900"
+              data-m3="4560"
+              data-old3="5700"
+              data-save3="1140"
+            >
+              <div class="price-tabs">
+                <button type="button" class="price-tab" data-mode="1">
+                  شهر واحد
+                </button>
+                <button type="button" class="price-tab active" data-mode="3">
+                  3 أشهر
+                </button>
+              </div>
+              <div class="price-old-row"></div>
+              <div class="price-main">
+                <span class="new latin js-price">4560</span
+                ><span class="cur">جنيه</span>
+              </div>
+              <span class="save-tag js-save">وفّر 1140 جنيه</span>
+            </div>
+            <button
+              type="button"
+              class="cta"
+              onclick="openWhatsAppInquiry(this)"
+              data-plan="الاختيار الأفضل"
+            >
+              احجز الخطة دي
+            </button>
+          </div>
+
+          <!-- Plan 3 -->
+          <div class="ticket">
+            <span class="plan-badge">الخطة 3</span>
+            <h3>تجربة متكاملة</h3>
+            <p class="desc">
+              تدريب شامل لتحقيق نتائج مميزة وطلاقة أكبر في اللغة.
+            </p>
+            <div class="feature-row">
+              <span class="dot"></span> 8 جلسات أساسية
+            </div>
+            <div class="feature-row">
+              <span class="dot"></span> Practice Booth: 6 جلسات
+            </div>
+            <div class="perforation"></div>
+            <div
+              class="price-block"
+              data-m1="2300"
+              data-m3="5520"
+              data-old3="6900"
+              data-save3="1380"
+            >
+              <div class="price-tabs">
+                <button type="button" class="price-tab" data-mode="1">
+                  شهر واحد
+                </button>
+                <button type="button" class="price-tab active" data-mode="3">
+                  3 أشهر
+                </button>
+              </div>
+              <div class="price-old-row"></div>
+              <div class="price-main">
+                <span class="new latin js-price">5520</span
+                ><span class="cur">جنيه</span>
+              </div>
+              <span class="save-tag js-save">وفّر 1380 جنيه</span>
+            </div>
+            <button
+              type="button"
+              class="cta"
+              onclick="openWhatsAppInquiry(this)"
+              data-plan="تجربة متكاملة"
+            >
+              احجز الخطة دي
+            </button>
+          </div>
+        </div>
+
+        <div class="bundle-table">
+          <table>
+            <thead>
+              <tr>
+                <th>الباقة</th>
+                <th>شهر واحد</th>
+                <th>شهرين</th>
+                <th>3 أشهر</th>
+                <th>6 أشهر</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>نسبة الخصم</td>
+                <td>السعر الأساسي</td>
+                <td>خصم 10%</td>
+                <td class="hi">خصم 20%</td>
+                <td class="hi">خصم 25%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="testimonials">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">آراء حقيقية</div>
+          <h2>طلابنا بيحبوا YouSpeak</h2>
+          <p>تقييمات وردود فعل حقيقية من طلاب استخدموا الـ Practice Booth.</p>
+        </div>
+        <div class="stars-row" aria-label="تقييم 5 من 5 نجوم">★★★★★</div>
+        <div class="testi-grid testi-grid-img">
+          <figure class="shot-card">
+            <img
+              src="assets/testimonial-1.jpeg"
+              alt="لقطة شاشة من واتساب لرأي طالب: الجلسة كانت سلسة جدًا وسهل اتباعها"
+              loading="lazy"
+            />
+          </figure>
+          <figure class="shot-card">
+            <img
+              src="assets/testimonial-2.jpeg"
+              alt="لقطة شاشة من واتساب لرأي طالب بالعامية المصرية شاكرًا الأكاديمية"
+              loading="lazy"
+            />
+          </figure>
+          <figure class="shot-card">
+            <img
+              src="assets/testimonial-3.jpeg"
+              alt="لقطة شاشة من واتساب لرأي طالب: الجلسة كانت سلسة جدًا وسهل اتباعها"
+              loading="lazy"
+            />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="final-cta">
+      <div class="container">
+        <h2>جاهز تفتح باب الطلاقة؟</h2>
+        <p>احجز تذكرة الـ Practice Booth دلوقتي وابدأ رحلتك مع YouSpeak.</p>
+        <div class="contact-row">
+          <a
+            href="https://wa.me/201500263132?text=%D8%B9%D8%A7%D9%8A%D8%B2%D8%A9%20%D8%A3%D8%AD%D8%AC%D8%B2%20%D8%AA%D8%B0%D9%83%D8%B1%D8%A9%20Practice%20Booth"
+            target="_blank"
+            rel="noopener"
+            class="btn btn-primary"
+            >راسلنا على واتساب</a
+          >
+          <a
+            href="https://www.facebook.com/share/1JBqv7yugd/?mibextid=wwXIfr"
+            target="_blank"
+            rel="noopener"
+            class="btn btn-ghost"
+            >تابعنا على فيسبوك</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container foot-row">
+        <span
+          class="latin"
+          style="
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+          "
+        >
+          <img
+            src="assets/logo-icon.png"
+            alt=""
+            class="brand-logo"
+            style="width: 26px; height: 26px"
+          />
+          © 2026 YouSpeak English Academy
+        </span>
+        <div class="foot-links">
+          <a href="#booth">البرنامج</a>
+          <a href="#pricing">الأسعار</a>
+          <a href="#contact">تواصل معنا</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ============ CHECKOUT MODAL ============ -->
+    <div
+      class="checkout-overlay"
+      id="checkoutOverlay"
+      onclick="if (event.target === this) closeCheckout();"
+    >
+      <div
+        class="checkout-box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="coTitle"
+      >
+        <button
+          type="button"
+          class="co-close"
+          onclick="closeCheckout()"
+          aria-label="إغلاق"
+        >
+          ✕
+        </button>
+
+        <div class="co-summary">
+          <span class="co-eyebrow">إتمام الحجز</span>
+          <h3 id="coTitle" class="co-plan"></h3>
+          <div class="co-price-row">
+            <span class="co-price latin"></span>
+            <span class="co-duration"></span>
+          </div>
+          <div class="co-order">
+            رقم الطلب: <strong class="latin co-code"></strong>
+          </div>
+        </div>
+
+        <div class="co-methods">
+          <button
+            type="button"
+            class="co-tab active"
+            data-method="instapay"
+            onclick="switchMethod(this)"
+          >
+            إنستاباي
+          </button>
+          <button
+            type="button"
+            class="co-tab"
+            data-method="vodafone"
+            onclick="switchMethod(this)"
+          >
+            فودافون كاش
+          </button>
+        </div>
+
+        <div class="co-panel" data-method-panel="instapay">
+          <p class="co-step">
+            1. افتحي تطبيق إنستاباي وحوّلي مبلغ
+            <strong class="co-price-inline latin"></strong> جنيه إلى:
+          </p>
+          <div class="co-copy-row">
+            <span class="latin co-value" id="instapayHandle"
+              >YouSpeakAcademy@instapay</span
+            >
+            <button
+              type="button"
+              class="co-copy"
+              onclick="copyValue('instapayHandle', this)"
+            >
+              نسخ
+            </button>
+          </div>
+          <p class="co-step">
+            2. اكتبي رقم الطلب <strong class="latin co-code-inline"></strong> في
+            خانة الملاحظات لو متاحة.
+          </p>
+        </div>
+
+        <div
+          class="co-panel"
+          data-method-panel="vodafone"
+          style="display: none"
+        >
+          <p class="co-step">
+            1. حوّلي مبلغ <strong class="co-price-inline latin"></strong> جنيه
+            عبر فودافون كاش إلى الرقم:
+          </p>
+          <div class="co-copy-row">
+            <span class="latin co-value" id="vodafoneNumber">010XXXXXXXX</span>
+            <button
+              type="button"
+              class="co-copy"
+              onclick="copyValue('vodafoneNumber', this)"
+            >
+              نسخ
+            </button>
+          </div>
+          <p class="co-step">
+            2. احتفظي برسالة التأكيد اللي بتوصلك من فودافون.
+          </p>
+        </div>
+
+        <p class="co-step co-final">
+          3. بعد التحويل، دوسي على الزرار وابعتي لقطة شاشة الإيصال على واتساب
+          عشان نأكد حجزك.
+        </p>
+
+        <a
+          href="#"
+          target="_blank"
+          rel="noopener"
+          class="btn btn-primary co-confirm"
+          id="coConfirmBtn"
+        >
+          أرسلت التحويل — تأكيد عبر واتساب
+        </a>
+        <p class="co-note">
+          الحجز بيتأكد يدويًا بعد استلام إيصال التحويل، وهيوصلك رد بالتأكيد خلال
+          ساعات العمل.
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // ---- Payment contact details (update with real handle / number) ----
+      const PAYMENT_INFO = {
+        whatsapp: "201500263132", // real WhatsApp number
+        instapay: "YouSpeakAcademy@instapay", // TODO: real Instapay handle
+        vodafone: "010XXXXXXXX", // TODO: real Vodafone Cash number
+      };
+
+      // ---- Checkout modal ----
+      const overlay = document.getElementById("checkoutOverlay");
+      let currentMethod = "instapay";
+
+      function genOrderCode() {
+        const rand = Math.floor(1000 + Math.random() * 9000);
+        const d = new Date();
+        const stamp =
+          (d.getMonth() + 1).toString().padStart(2, "0") +
+          d.getDate().toString().padStart(2, "0");
+        return "YS-" + stamp + "-" + rand;
+      }
+
+      // ---- Direct WhatsApp inquiry when a plan is selected ----
+      function openWhatsAppInquiry(btn) {
+        const ticket = btn.closest(".ticket");
+        const priceBlock = ticket.querySelector(".price-block");
+        const activeTab = priceBlock.querySelector(".price-tab.active");
+        const mode = activeTab.dataset.mode;
+        const price =
+          mode === "3" ? priceBlock.dataset.m3 : priceBlock.dataset.m1;
+        const duration = mode === "3" ? "3 أشهر" : "شهر واحد";
+        const planName = btn.dataset.plan;
+
+        const msg =
+          'السلام عليكم، حابة أعرف تفاصيل أكتر عن خطة "' +
+          planName +
+          '" (' +
+          duration +
+          ") بسعر " +
+          price +
+          " جنيه.";
+        const url =
+          "https://wa.me/" +
+          PAYMENT_INFO.whatsapp +
+          "?text=" +
+          encodeURIComponent(msg);
+        window.open(url, "_blank", "noopener");
+      }
+
+      function openCheckout(btn) {
+        const ticket = btn.closest(".ticket");
+        const priceBlock = ticket.querySelector(".price-block");
+        const activeTab = priceBlock.querySelector(".price-tab.active");
+        const mode = activeTab.dataset.mode;
+        const price =
+          mode === "3" ? priceBlock.dataset.m3 : priceBlock.dataset.m1;
+        const duration = mode === "3" ? "3 أشهر" : "شهر واحد";
+        const planName = btn.dataset.plan;
+        const orderCode = genOrderCode();
+
+        document.querySelector(".co-plan").textContent = planName;
+        document.querySelector(".co-price").textContent = price + " جنيه";
+        document.querySelector(".co-duration").textContent =
+          "(" + duration + ")";
+        document.querySelector(".co-code").textContent = orderCode;
+        document
+          .querySelectorAll(".co-price-inline")
+          .forEach((el) => (el.textContent = price));
+        document.querySelector(".co-code-inline").textContent = orderCode;
+
+        document.getElementById("instapayHandle").textContent =
+          PAYMENT_INFO.instapay;
+        document.getElementById("vodafoneNumber").textContent =
+          PAYMENT_INFO.vodafone;
+
+        const msg =
+          'السلام عليكم، عايزة أأكد حجز خطة "' +
+          planName +
+          '" (' +
+          duration +
+          ") بمبلغ " +
+          price +
+          " جنيه.\nرقم الطلب: " +
+          orderCode +
+          "\nهبعت إيصال التحويل دلوقتي.";
+        document.getElementById("coConfirmBtn").href =
+          "https://wa.me/" +
+          PAYMENT_INFO.whatsapp +
+          "?text=" +
+          encodeURIComponent(msg);
+
+        switchMethod(document.querySelector('.co-tab[data-method="instapay"]'));
+        overlay.classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeCheckout() {
+        overlay.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeCheckout();
+      });
+
+      function switchMethod(tab) {
+        currentMethod = tab.dataset.method;
+        document
+          .querySelectorAll(".co-tab")
+          .forEach((t) => t.classList.toggle("active", t === tab));
+        document.querySelectorAll("[data-method-panel]").forEach((p) => {
+          p.style.display =
+            p.dataset.methodPanel === currentMethod ? "block" : "none";
+        });
+      }
+
+      function copyValue(elId, btn) {
+        const text = document.getElementById(elId).textContent.trim();
+        navigator.clipboard
+          .writeText(text)
+          .then(() => {
+            const original = btn.textContent;
+            btn.textContent = "اتنسخت ✓";
+            btn.classList.add("copied");
+            setTimeout(() => {
+              btn.textContent = original;
+              btn.classList.remove("copied");
+            }, 1600);
+          })
+          .catch(() => {
+            alert("انسخي: " + text);
+          });
+      }
+
+      // ---- Mobile menu ----
+      const toggleBtn = document.querySelector(".nav-toggle");
+      const navLinks = document.querySelector(".nav-links");
+      toggleBtn.addEventListener("click", () =>
+        navLinks.classList.toggle("open"),
+      );
+      navLinks.querySelectorAll("a").forEach((a) => {
+        a.addEventListener("click", () => navLinks.classList.remove("open"));
+      });
+
+      // ---- Pricing plan monthly / 3-month toggle ----
+      document.querySelectorAll(".price-block").forEach((block) => {
+        const m1 = block.dataset.m1;
+        const m3 = block.dataset.m3;
+        const old3 = block.dataset.old3;
+        const save3 = block.dataset.save3;
+        const priceEl = block.querySelector(".js-price");
+        const saveEl = block.querySelector(".js-save");
+        const oldRow = block.querySelector(".price-old-row");
+        const tabs = block.querySelectorAll(".price-tab");
+
+        function render(mode) {
+          tabs.forEach((t) =>
+            t.classList.toggle("active", t.dataset.mode === mode),
+          );
+          if (mode === "3") {
+            priceEl.textContent = m3;
+            saveEl.style.display = "inline-block";
+            saveEl.textContent = "وفّر " + save3 + " جنيه";
+            oldRow.innerHTML =
+              '<span class="old latin">' + old3 + " جنيه</span>";
+          } else {
+            priceEl.textContent = m1;
+            saveEl.style.display = "none";
+            oldRow.innerHTML = "";
+          }
+        }
+
+        tabs.forEach((tab) =>
+          tab.addEventListener("click", () => render(tab.dataset.mode)),
+        );
+        render("3");
+      });
+
+      // ---- Highlight active section in nav while scrolling ----
+      const sections = ["booth", "pricing", "testimonials", "contact"]
+        .map((id) => document.getElementById(id))
+        .filter(Boolean);
+      const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              navAnchors.forEach((a) => a.classList.remove("current"));
+              const match = document.querySelector(
+                '.nav-links a[href="#' + entry.target.id + '"]',
+              );
+              if (match) match.classList.add("current");
+            }
+          });
+        },
+        { rootMargin: "-45% 0px -50% 0px" },
+      );
+      sections.forEach((sec) => observer.observe(sec));
+    </script>
+  </body>
+</html>
