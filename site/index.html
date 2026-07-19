@@ -70,6 +70,11 @@
           animation-duration: 0.001s !important;
           animation-iteration-count: 1 !important;
           transition-duration: 0.001s !important;
+          scroll-behavior: auto !important;
+        }
+        .reveal {
+          opacity: 1 !important;
+          transform: none !important;
         }
       }
 
@@ -81,6 +86,101 @@
         border-radius: 4px;
       }
 
+      /* ================= SCROLL PROGRESS ================= */
+      .scroll-progress {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 3px;
+        z-index: 200;
+        background: transparent;
+      }
+      .scroll-progress .bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, var(--red-600), var(--gold-400));
+        transform-origin: right;
+        transition: width 0.08s linear;
+      }
+
+      /* ================= REVEAL ANIMATIONS ================= */
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+      }
+      .reveal.in-view {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .reveal-scale {
+        opacity: 0;
+        transform: scale(0.92);
+        transition:
+          opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal-scale.in-view {
+        opacity: 1;
+        transform: scale(1);
+      }
+      .reveal-right {
+        opacity: 0;
+        transform: translateX(36px);
+        transition:
+          opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal-right.in-view {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .reveal-left {
+        opacity: 0;
+        transform: translateX(-36px);
+        transition:
+          opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal-left.in-view {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      /* stagger children */
+      .stagger > * {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .stagger.in-view > * {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .stagger.in-view > *:nth-child(1) {
+        transition-delay: 0.04s;
+      }
+      .stagger.in-view > *:nth-child(2) {
+        transition-delay: 0.12s;
+      }
+      .stagger.in-view > *:nth-child(3) {
+        transition-delay: 0.2s;
+      }
+      .stagger.in-view > *:nth-child(4) {
+        transition-delay: 0.28s;
+      }
+      .stagger.in-view > *:nth-child(5) {
+        transition-delay: 0.36s;
+      }
+      .stagger.in-view > *:nth-child(6) {
+        transition-delay: 0.44s;
+      }
+
       /* ================= HEADER ================= */
       header {
         position: sticky;
@@ -89,6 +189,10 @@
         background: rgba(10, 23, 64, 0.92);
         backdrop-filter: blur(10px);
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        transition: box-shadow 0.3s ease;
+      }
+      header.scrolled {
+        box-shadow: 0 8px 24px rgba(10, 23, 64, 0.25);
       }
       .nav {
         display: flex;
@@ -116,6 +220,10 @@
         height: 34px;
         object-fit: contain;
         background: transparent;
+        transition: transform 0.4s ease;
+      }
+      .brand:hover .brand-logo {
+        transform: rotate(-8deg) scale(1.06);
       }
       .nav-links {
         display: flex;
@@ -129,13 +237,7 @@
         transition: color 0.2s;
         position: relative;
       }
-      .nav-links a:hover {
-        color: #fff;
-      }
-      .nav-links a.current:not(.nav-cta) {
-        color: #fff;
-      }
-      .nav-links a.current:not(.nav-cta)::after {
+      .nav-links a:not(.nav-cta)::before {
         content: "";
         position: absolute;
         right: 0;
@@ -143,6 +245,21 @@
         bottom: -8px;
         height: 2px;
         background: var(--gold-400);
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.3s ease;
+      }
+      .nav-links a:not(.nav-cta):hover::before {
+        transform: scaleX(1);
+      }
+      .nav-links a:hover {
+        color: #fff;
+      }
+      .nav-links a.current:not(.nav-cta) {
+        color: #fff;
+      }
+      .nav-links a.current:not(.nav-cta)::before {
+        transform: scaleX(1);
       }
       .nav-cta {
         background: var(--red-600);
@@ -155,6 +272,19 @@
         transition:
           transform 0.2s,
           box-shadow 0.2s;
+        position: relative;
+        overflow: hidden;
+      }
+      .nav-cta::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.25);
+        transform: translateX(-100%);
+        transition: transform 0.5s ease;
+      }
+      .nav-cta:hover::after {
+        transform: translateX(100%);
       }
       .nav-cta:hover {
         transform: translateY(-2px);
@@ -194,6 +324,18 @@
           height: 2px;
           background: #fff;
           border-radius: 2px;
+          transition:
+            transform 0.3s ease,
+            opacity 0.3s ease;
+        }
+        .nav-toggle.open span:nth-child(1) {
+          transform: translateY(7px) rotate(45deg);
+        }
+        .nav-toggle.open span:nth-child(2) {
+          opacity: 0;
+        }
+        .nav-toggle.open span:nth-child(3) {
+          transform: translateY(-7px) rotate(-45deg);
         }
       }
 
@@ -228,6 +370,12 @@
         background-size: 26px 26px;
         opacity: 0.5;
         pointer-events: none;
+        animation: driftDots 60s linear infinite;
+      }
+      @keyframes driftDots {
+        to {
+          background-position: 260px 260px;
+        }
       }
       .hero-grid {
         position: relative;
@@ -237,6 +385,35 @@
         gap: 50px;
         align-items: center;
       }
+
+      /* hero entrance choreography */
+      .hero-anim {
+        opacity: 0;
+        transform: translateY(22px);
+        animation: heroIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      @keyframes heroIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .hero .eyebrow {
+        animation-delay: 0.05s;
+      }
+      .hero h1 {
+        animation-delay: 0.18s;
+      }
+      .hero p.lead {
+        animation-delay: 0.32s;
+      }
+      .hero-ctas {
+        animation-delay: 0.46s;
+      }
+      .door-scene {
+        animation-delay: 0.4s;
+      }
+
       .eyebrow {
         position: relative;
         display: inline-flex;
@@ -250,6 +427,28 @@
         font-weight: 600;
         color: var(--gold-400);
         margin-bottom: 22px;
+      }
+      .eyebrow .tix {
+        display: inline-block;
+        animation: ticketWiggle 2.6s ease-in-out infinite;
+      }
+      @keyframes ticketWiggle {
+        0%,
+        100% {
+          transform: rotate(0deg);
+        }
+        20% {
+          transform: rotate(-12deg);
+        }
+        40% {
+          transform: rotate(8deg);
+        }
+        60% {
+          transform: rotate(-4deg);
+        }
+        80% {
+          transform: rotate(0deg);
+        }
       }
       .eyebrow::before,
       .eyebrow::after {
@@ -278,6 +477,25 @@
         color: var(--red-600);
         position: relative;
       }
+      .hero h1 em::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        left: 0;
+        bottom: -2px;
+        height: 8px;
+        background: rgba(226, 49, 61, 0.18);
+        border-radius: 4px;
+        transform: scaleX(0);
+        transform-origin: right;
+        animation: underlineGrow 0.7s 1.1s cubic-bezier(0.16, 1, 0.3, 1)
+          forwards;
+      }
+      @keyframes underlineGrow {
+        to {
+          transform: scaleX(1);
+        }
+      }
       .hero p.lead {
         font-size: 18px;
         line-height: 1.8;
@@ -304,15 +522,35 @@
         transition:
           transform 0.2s,
           box-shadow 0.2s;
+        position: relative;
+        overflow: hidden;
       }
       .btn-primary {
         background: var(--red-600);
         color: #fff;
         box-shadow: 0 10px 24px rgba(226, 49, 61, 0.4);
       }
+      .btn-primary::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at var(--mx, 50%) var(--my, 50%),
+          rgba(255, 255, 255, 0.35),
+          transparent 55%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .btn-primary:hover::after {
+        opacity: 1;
+      }
       .btn-primary:hover {
         transform: translateY(-3px);
         box-shadow: 0 14px 28px rgba(226, 49, 61, 0.5);
+      }
+      .btn-primary:active {
+        transform: translateY(-1px) scale(0.98);
       }
       .btn-ghost {
         background: transparent;
@@ -322,6 +560,10 @@
       .btn-ghost:hover {
         background: rgba(255, 255, 255, 0.08);
         border-color: #fff;
+        transform: translateY(-3px);
+      }
+      .btn-ghost:active {
+        transform: translateY(-1px) scale(0.98);
       }
 
       /* door + ticket signature icon */
@@ -350,6 +592,30 @@
       @keyframes spin {
         to {
           transform: rotate(360deg);
+        }
+      }
+      .door-glow {
+        position: absolute;
+        width: 260px;
+        height: 260px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(244, 178, 58, 0.22),
+          transparent 70%
+        );
+        filter: blur(6px);
+        animation: pulseGlow 3.4s ease-in-out infinite;
+      }
+      @keyframes pulseGlow {
+        0%,
+        100% {
+          opacity: 0.6;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.08);
         }
       }
       .door {
@@ -438,6 +704,31 @@
         width: 3px;
         background: #fff;
         border-radius: 2px;
+        animation: barPulse 1.6s ease-in-out infinite;
+      }
+      .ticket-fly .bars i:nth-child(2) {
+        animation-delay: 0.1s;
+      }
+      .ticket-fly .bars i:nth-child(3) {
+        animation-delay: 0.2s;
+      }
+      .ticket-fly .bars i:nth-child(4) {
+        animation-delay: 0.3s;
+      }
+      .ticket-fly .bars i:nth-child(5) {
+        animation-delay: 0.4s;
+      }
+      .ticket-fly .bars i:nth-child(6) {
+        animation-delay: 0.5s;
+      }
+      @keyframes barPulse {
+        0%,
+        100% {
+          opacity: 0.55;
+        }
+        50% {
+          opacity: 1;
+        }
       }
       @keyframes slide {
         0%,
@@ -446,6 +737,29 @@
         }
         50% {
           transform: translateX(-18px) rotate(-6deg);
+        }
+      }
+      /* floating sparks around the door scene */
+      .spark {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--gold-400);
+        opacity: 0.7;
+        animation: floatUp 5s ease-in-out infinite;
+      }
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0) scale(1);
+          opacity: 0;
+        }
+        15% {
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateY(-140px) scale(0.4);
+          opacity: 0;
         }
       }
 
@@ -467,9 +781,95 @@
         }
       }
 
+      /* ================= DECORATIVE GRAPHICS LAYER ================= */
+      .deco-layer {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .deco-shape {
+        position: absolute;
+        display: block;
+        opacity: 0.16;
+        filter: drop-shadow(0 6px 10px rgba(10, 23, 64, 0.08));
+        animation: decoFloat 14s ease-in-out infinite;
+      }
+      .deco-shape.gold {
+        color: var(--gold-400);
+      }
+      .deco-shape.red {
+        color: var(--red-600);
+      }
+      .deco-shape.navy {
+        color: var(--navy-700);
+      }
+      @keyframes decoFloat {
+        0%,
+        100% {
+          transform: translate(0, 0) rotate(0deg);
+        }
+        25% {
+          transform: translate(10px, -18px) rotate(8deg);
+        }
+        50% {
+          transform: translate(-6px, -32px) rotate(-6deg);
+        }
+        75% {
+          transform: translate(-14px, -12px) rotate(4deg);
+        }
+      }
+      @keyframes decoSpin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes decoDrift {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        50% {
+          transform: translateX(24px);
+        }
+      }
+      .deco-ring-outline {
+        position: absolute;
+        border: 2px dashed currentColor;
+        border-radius: 50%;
+        opacity: 0.14;
+        animation: decoSpin 50s linear infinite;
+      }
+      .deco-dot {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        opacity: 0.3;
+        animation: decoFloat 9s ease-in-out infinite;
+      }
+      @media (max-width: 720px) {
+        .deco-layer {
+          display: none;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .deco-shape,
+        .deco-ring-outline,
+        .deco-dot {
+          animation: none !important;
+        }
+      }
+
       /* ================= SECTION UTIL ================= */
       section {
         padding: 96px 0;
+        position: relative;
+      }
+      section > .container {
+        position: relative;
+        z-index: 1;
       }
       .section-head {
         max-width: 640px;
@@ -491,6 +891,13 @@
         height: 3px;
         background: var(--red-600);
         border-radius: 2px;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.5s 0.15s ease;
+      }
+      .reveal.in-view .kicker::before,
+      .in-view .kicker::before {
+        transform: scaleX(1);
       }
       .section-head h2 {
         font-size: clamp(28px, 3.6vw, 40px);
@@ -511,6 +918,26 @@
         text-align: center;
         padding: 64px 0;
         position: relative;
+        overflow: hidden;
+      }
+      .problem::before {
+        content: "";
+        position: absolute;
+        top: -60%;
+        right: -10%;
+        width: 320px;
+        height: 320px;
+        background: radial-gradient(
+          circle,
+          rgba(226, 49, 61, 0.28),
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .problem > .deco-layer + .container,
+      .problem > .container {
+        position: relative;
+        z-index: 1;
       }
       .problem h3 {
         font-size: clamp(24px, 4vw, 36px);
@@ -518,6 +945,7 @@
       }
       .problem h3 .hi {
         color: var(--gold-400);
+        position: relative;
       }
       .problem p {
         margin-top: 16px;
@@ -544,6 +972,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        transition: transform 0.4s ease;
       }
       .booth-illustration::before {
         content: "PRACTICE BOOTH";
@@ -568,6 +997,10 @@
         object-fit: cover;
         border-radius: 16px;
         box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .booth-illustration:hover .booth-photo {
+        transform: scale(1.04);
       }
 
       .skill-list {
@@ -581,12 +1014,14 @@
         border-radius: 16px;
         padding: 22px;
         transition:
-          transform 0.2s,
-          box-shadow 0.2s;
+          transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 0.3s ease,
+          border-color 0.3s ease;
       }
       .skill-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 16px 30px rgba(10, 23, 64, 0.08);
+        transform: translateY(-6px);
+        box-shadow: 0 16px 30px rgba(10, 23, 64, 0.1);
+        border-color: rgba(226, 49, 61, 0.25);
       }
       .skill-icon {
         width: 44px;
@@ -597,6 +1032,10 @@
         justify-content: center;
         margin-bottom: 14px;
         color: #fff;
+        transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .skill-card:hover .skill-icon {
+        transform: rotate(-8deg) scale(1.1);
       }
       .skill-icon.blue {
         background: var(--navy-700);
@@ -643,6 +1082,23 @@
         color: var(--navy-900);
         font-weight: 800;
         margin-top: 2px;
+        transform: scale(0);
+        transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .why-list.in-view .check {
+        transform: scale(1);
+      }
+      .why-list.in-view li:nth-child(1) .check {
+        transition-delay: 0.05s;
+      }
+      .why-list.in-view li:nth-child(2) .check {
+        transition-delay: 0.15s;
+      }
+      .why-list.in-view li:nth-child(3) .check {
+        transition-delay: 0.25s;
+      }
+      .why-list.in-view li:nth-child(4) .check {
+        transition-delay: 0.35s;
       }
 
       @media (max-width: 900px) {
@@ -670,6 +1126,30 @@
         padding: 24px 30px;
         margin-bottom: 44px;
         box-shadow: 0 18px 40px rgba(196, 30, 42, 0.28);
+        position: relative;
+        overflow: hidden;
+      }
+      .summer-banner::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 60px;
+        background: linear-gradient(
+          100deg,
+          transparent,
+          rgba(255, 255, 255, 0.25),
+          transparent
+        );
+        animation: shimmer 3.2s ease-in-out infinite;
+      }
+      @keyframes shimmer {
+        0% {
+          left: -10%;
+        }
+        100% {
+          left: 110%;
+        }
       }
       .summer-banner .txt strong {
         font-family: "Cairo", sans-serif;
@@ -688,6 +1168,16 @@
         padding: 8px 16px;
         border-radius: 999px;
         white-space: nowrap;
+        animation: badgeBeat 1.8s ease-in-out infinite;
+      }
+      @keyframes badgeBeat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.06);
+        }
       }
 
       .plans {
@@ -703,19 +1193,19 @@
         padding: 30px 26px 26px;
         border: 1px solid var(--line);
         transition:
-          transform 0.25s ease,
-          box-shadow 0.25s ease;
+          transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 0.3s ease;
       }
       .ticket:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 20px 40px rgba(10, 23, 64, 0.14);
+        transform: translateY(-8px);
+        box-shadow: 0 22px 44px rgba(10, 23, 64, 0.16);
       }
       .ticket.featured {
         border: 2px solid var(--red-600);
         transform: translateY(-10px);
       }
       .ticket.featured:hover {
-        transform: translateY(-14px);
+        transform: translateY(-16px);
       }
       .ribbon {
         position: absolute;
@@ -728,6 +1218,16 @@
         padding: 6px 14px;
         border-radius: 999px;
         box-shadow: 0 6px 14px rgba(244, 178, 58, 0.4);
+        animation: ribbonSway 3s ease-in-out infinite;
+      }
+      @keyframes ribbonSway {
+        0%,
+        100% {
+          transform: rotate(0deg);
+        }
+        50% {
+          transform: rotate(-3deg);
+        }
       }
       .plan-badge {
         display: inline-block;
@@ -853,6 +1353,14 @@
         font-size: 32px;
         font-weight: 800;
         color: var(--navy-900);
+        display: inline-block;
+        transition:
+          transform 0.25s ease,
+          opacity 0.25s ease;
+      }
+      .price-main .new.flip {
+        transform: translateY(-6px);
+        opacity: 0;
       }
       .price-main .cur {
         font-size: 14px;
@@ -885,12 +1393,28 @@
         transition:
           background 0.2s,
           transform 0.2s;
+        position: relative;
+        overflow: hidden;
       }
       .ticket.featured .cta {
         background: var(--red-600);
       }
+      .ticket .cta::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.18);
+        transform: translateX(-100%);
+        transition: transform 0.5s ease;
+      }
+      .ticket .cta:hover::after {
+        transform: translateX(100%);
+      }
       .ticket .cta:hover {
         transform: translateY(-2px);
+      }
+      .ticket .cta:active {
+        transform: translateY(0) scale(0.98);
       }
 
       .bundle-table {
@@ -915,6 +1439,12 @@
         background: var(--navy-900);
         color: #fff;
         font-weight: 700;
+      }
+      .bundle-table tbody tr {
+        transition: background 0.2s ease;
+      }
+      .bundle-table tbody tr:hover {
+        background: rgba(226, 49, 61, 0.04);
       }
       .bundle-table tbody tr:last-child td {
         border-bottom: none;
@@ -987,6 +1517,33 @@
         letter-spacing: 4px;
         margin-bottom: 22px;
       }
+      .stars-row span {
+        display: inline-block;
+        opacity: 0;
+        transform: scale(0.3) rotate(-30deg);
+        transition:
+          opacity 0.35s ease,
+          transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .stars-row.in-view span {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+      }
+      .stars-row.in-view span:nth-child(1) {
+        transition-delay: 0.05s;
+      }
+      .stars-row.in-view span:nth-child(2) {
+        transition-delay: 0.15s;
+      }
+      .stars-row.in-view span:nth-child(3) {
+        transition-delay: 0.25s;
+      }
+      .stars-row.in-view span:nth-child(4) {
+        transition-delay: 0.35s;
+      }
+      .stars-row.in-view span:nth-child(5) {
+        transition-delay: 0.45s;
+      }
       .shot-card {
         background: #fff;
         border-radius: 20px;
@@ -994,12 +1551,12 @@
         border: 1px solid var(--line);
         box-shadow: 0 14px 30px rgba(10, 23, 64, 0.08);
         transition:
-          transform 0.25s ease,
-          box-shadow 0.25s ease;
+          transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 0.3s ease;
       }
       .shot-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 22px 40px rgba(10, 23, 64, 0.14);
+        transform: translateY(-8px) scale(1.015);
+        box-shadow: 0 26px 46px rgba(10, 23, 64, 0.16);
       }
       .shot-card img {
         width: 100%;
@@ -1027,6 +1584,21 @@
         padding: 100px 0;
         position: relative;
         overflow: hidden;
+      }
+      .final-cta::before {
+        content: "";
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(226, 49, 61, 0.18),
+          transparent 70%
+        );
+        top: -220px;
+        left: -160px;
+        animation: pulseGlow 5s ease-in-out infinite;
       }
       .final-cta h2 {
         font-size: clamp(28px, 4vw, 44px);
@@ -1065,6 +1637,23 @@
         display: flex;
         gap: 20px;
       }
+      .foot-links a {
+        position: relative;
+      }
+      .foot-links a::before {
+        content: "";
+        position: absolute;
+        right: 0;
+        left: 0;
+        bottom: -4px;
+        height: 1px;
+        background: currentColor;
+        transform: scaleX(0);
+        transition: transform 0.25s ease;
+      }
+      .foot-links a:hover::before {
+        transform: scaleX(1);
+      }
       .foot-links a:hover {
         color: #fff;
       }
@@ -1080,9 +1669,14 @@
         justify-content: center;
         z-index: 1000;
         padding: 20px;
+        opacity: 0;
+        transition: opacity 0.25s ease;
       }
       .checkout-overlay.open {
         display: flex;
+      }
+      .checkout-overlay.show {
+        opacity: 1;
       }
       .checkout-box {
         background: #fff;
@@ -1118,9 +1712,13 @@
         cursor: pointer;
         font-size: 14px;
         color: var(--navy-900);
+        transition:
+          transform 0.2s ease,
+          background 0.2s ease;
       }
       .co-close:hover {
         background: var(--line);
+        transform: rotate(90deg);
       }
       .co-eyebrow {
         color: var(--red-600);
@@ -1192,6 +1790,19 @@
         line-height: 1.8;
         margin-bottom: 10px;
       }
+      .co-panel {
+        animation: panelFade 0.3s ease;
+      }
+      @keyframes panelFade {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
       .co-copy-row {
         display: flex;
         align-items: center;
@@ -1242,7 +1853,9 @@
     </style>
   </head>
   <body>
-    <header>
+    <div class="scroll-progress"><div class="bar" id="scrollBar"></div></div>
+
+    <header id="siteHeader">
       <div class="container nav">
         <div class="brand">
           <img
@@ -1256,7 +1869,8 @@
           class="nav-toggle"
           aria-label="فتح القائمة"
           onclick="
-            document.querySelector('.nav-links').classList.toggle('open')
+            document.querySelector('.nav-links').classList.toggle('open');
+            this.classList.toggle('open');
           "
         >
           <span></span><span></span><span></span>
@@ -1273,23 +1887,26 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <span class="eyebrow">🎟️ تذكرتك الحقيقية للطلاقة</span>
-          <h1>
+          <span class="eyebrow hero-anim"
+            ><span class="tix">🎟️</span> تذكرتك الحقيقية للطلاقة</span
+          >
+          <h1 class="hero-anim">
             دروس اللغة مش كفاية...<br />التمرين الحقيقي هو <em>اللي بيفرق</em>
           </h1>
-          <p class="lead">
+          <p class="lead hero-anim">
             في YouSpeak مش بنكتفي بحفظ القواعد. بندخلك الـ Practice Booth،
             مساحتك الخاصة للتمرن على التحدث والاستماع والقراءة والكتابة، لحد ما
             تحس إنك فعلاً بقيت واثق من لغتك.
           </p>
-          <div class="hero-ctas">
+          <div class="hero-ctas hero-anim">
             <a href="#pricing" class="btn btn-primary">شوف الخطط والأسعار</a>
             <a href="#booth" class="btn btn-ghost"
               >إيه هو الـ Practice Booth؟</a
             >
           </div>
         </div>
-        <div class="door-scene" aria-hidden="true">
+        <div class="door-scene hero-anim" aria-hidden="true">
+          <div class="door-glow"></div>
           <div class="door-ring"></div>
           <div class="door"></div>
           <div class="ticket-fly">
@@ -1304,7 +1921,47 @@
     </section>
 
     <div class="problem">
-      <div class="container">
+      <div class="deco-layer" aria-hidden="true">
+        <span
+          class="deco-shape gold"
+          style="font-size: 26px; top: 20%; right: 8%; animation-duration: 11s"
+          >🎫</span
+        >
+        <span
+          class="deco-shape red"
+          style="
+            font-size: 20px;
+            top: 65%;
+            right: 20%;
+            animation-duration: 13s;
+            animation-delay: 1s;
+          "
+          >✦</span
+        >
+        <span
+          class="deco-shape gold"
+          style="
+            font-size: 18px;
+            top: 30%;
+            left: 12%;
+            animation-duration: 9s;
+            animation-delay: 0.5s;
+          "
+          >✧</span
+        >
+        <span
+          class="deco-shape red"
+          style="
+            font-size: 22px;
+            top: 70%;
+            left: 6%;
+            animation-duration: 15s;
+            animation-delay: 2s;
+          "
+          >🎟️</span
+        >
+      </div>
+      <div class="container reveal">
         <h3>محاضرات ال English <span class="hi">مش كفاية لوحدها</span>؟</h3>
         <p>
           التقدم الحقيقي بييجي من التمرين الحقيقي. عشان كدة بنقدملك مساحة تمرين
@@ -1314,16 +1971,66 @@
     </div>
 
     <section id="booth">
+      <div class="deco-layer" aria-hidden="true">
+        <span
+          class="deco-shape navy"
+          style="font-size: 30px; top: 8%; right: 6%; animation-duration: 12s"
+          >🎧</span
+        >
+        <span
+          class="deco-shape red"
+          style="
+            font-size: 24px;
+            top: 55%;
+            right: 3%;
+            animation-duration: 16s;
+            animation-delay: 1.5s;
+          "
+          >✍️</span
+        >
+        <span
+          class="deco-shape gold"
+          style="
+            font-size: 20px;
+            top: 80%;
+            right: 18%;
+            animation-duration: 10s;
+            animation-delay: 0.8s;
+          "
+          >💬</span
+        >
+        <span
+          class="deco-shape navy"
+          style="
+            font-size: 26px;
+            top: 20%;
+            left: 4%;
+            animation-duration: 14s;
+            animation-delay: 2.2s;
+          "
+          >📖</span
+        >
+        <div
+          class="deco-ring-outline"
+          style="
+            width: 180px;
+            height: 180px;
+            top: 60%;
+            left: -40px;
+            color: var(--navy-700);
+          "
+        ></div>
+      </div>
       <div class="container">
         <div class="booth-wrap">
-          <div class="booth-illustration">
+          <div class="booth-illustration reveal-left">
             <img
               src="assets/practice-booth.jpg"
               alt="كابينة التدريب الفردية في YouSpeak"
               class="booth-photo"
             />
           </div>
-          <div>
+          <div class="reveal-right">
             <div class="kicker">Practice Booth</div>
             <h2>مساحتك الفردية لتتمرن وتتقن اللغة</h2>
             <p
@@ -1337,7 +2044,7 @@
               جلسات تدريب فردية خارج المحاضرة، مصممة تساعدك تطور مهاراتك الأربعة
               الأساسية في اللغة الإنجليزية.
             </p>
-            <div class="skill-list" style="margin-top: 26px">
+            <div class="skill-list stagger" style="margin-top: 26px">
               <div class="skill-card">
                 <div class="skill-icon red">🎤</div>
                 <h4>تحدث</h4>
@@ -1377,8 +2084,69 @@
     </section>
 
     <section id="pricing" class="pricing">
+      <div class="deco-layer" aria-hidden="true">
+        <span
+          class="deco-shape gold"
+          style="font-size: 24px; top: 6%; right: 5%; animation-duration: 11s"
+          >🎫</span
+        >
+        <span
+          class="deco-shape red"
+          style="
+            font-size: 18px;
+            top: 40%;
+            right: 2%;
+            animation-duration: 14s;
+            animation-delay: 1s;
+          "
+          >✦</span
+        >
+        <span
+          class="deco-shape navy"
+          style="
+            font-size: 22px;
+            top: 75%;
+            right: 10%;
+            animation-duration: 12s;
+            animation-delay: 0.4s;
+          "
+          >🎟️</span
+        >
+        <span
+          class="deco-shape gold"
+          style="
+            font-size: 20px;
+            top: 18%;
+            left: 4%;
+            animation-duration: 13s;
+            animation-delay: 1.8s;
+          "
+          >✧</span
+        >
+        <span
+          class="deco-shape red"
+          style="
+            font-size: 16px;
+            top: 60%;
+            left: 8%;
+            animation-duration: 10s;
+            animation-delay: 0.9s;
+          "
+          >✦</span
+        >
+        <div
+          class="deco-ring-outline"
+          style="
+            width: 220px;
+            height: 220px;
+            top: -60px;
+            right: -60px;
+            color: var(--red-600);
+          "
+        ></div>
+      </div>
       <div class="container">
-        <div class="summer-banner">
+        <div class="summer-banner reveal-scale">
           <div class="txt">
             <strong>☀️ عرض الصيف — اشترك 3 أشهر واحصل على خصم 20%</strong>
             <span>وفّر حتى 1380 جنيه على خطتك. عرض لفترة محدودة!</span>
@@ -1386,7 +2154,7 @@
           <span class="summer-badge">لا تفوّت الفرصة</span>
         </div>
 
-        <div class="section-head">
+        <div class="section-head reveal">
           <div class="kicker">الخطط والأسعار</div>
           <h2>اختار التذكرة المناسبة لرحلتك</h2>
           <p>
@@ -1395,7 +2163,7 @@
           </p>
         </div>
 
-        <div class="plans">
+        <div class="plans stagger">
           <!-- Plan 1 -->
           <div class="ticket">
             <span class="plan-badge">الخطة 1</span>
@@ -1534,7 +2302,7 @@
           </div>
         </div>
 
-        <div class="bundle-table">
+        <div class="bundle-table reveal">
           <table>
             <thead>
               <tr>
@@ -1560,14 +2328,56 @@
     </section>
 
     <section id="testimonials">
+      <div class="deco-layer" aria-hidden="true">
+        <span
+          class="deco-shape gold"
+          style="font-size: 22px; top: 10%; right: 8%; animation-duration: 10s"
+          >★</span
+        >
+        <span
+          class="deco-shape red"
+          style="
+            font-size: 16px;
+            top: 50%;
+            right: 2%;
+            animation-duration: 13s;
+            animation-delay: 0.6s;
+          "
+          >✦</span
+        >
+        <span
+          class="deco-shape gold"
+          style="
+            font-size: 18px;
+            top: 75%;
+            left: 6%;
+            animation-duration: 12s;
+            animation-delay: 1.4s;
+          "
+          >✧</span
+        >
+        <span
+          class="deco-shape navy"
+          style="
+            font-size: 20px;
+            top: 25%;
+            left: 3%;
+            animation-duration: 15s;
+            animation-delay: 2s;
+          "
+          >💬</span
+        >
+      </div>
       <div class="container">
-        <div class="section-head">
+        <div class="section-head reveal">
           <div class="kicker">آراء حقيقية</div>
           <h2>طلابنا بيحبوا YouSpeak</h2>
           <p>تقييمات وردود فعل حقيقية من طلاب استخدموا الـ Practice Booth.</p>
         </div>
-        <div class="stars-row" aria-label="تقييم 5 من 5 نجوم">★★★★★</div>
-        <div class="testi-grid testi-grid-img">
+        <div class="stars-row reveal" aria-label="تقييم 5 من 5 نجوم">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <div class="testi-grid testi-grid-img stagger">
           <figure class="shot-card">
             <img
               src="assets/testimonial-1.jpeg"
@@ -1594,7 +2404,59 @@
     </section>
 
     <section id="contact" class="final-cta">
-      <div class="container">
+      <div class="deco-layer" aria-hidden="true">
+        <span
+          class="deco-shape gold"
+          style="font-size: 26px; top: 15%; right: 10%; animation-duration: 11s"
+          >🎟️</span
+        >
+        <span
+          class="deco-shape red"
+          style="
+            font-size: 18px;
+            top: 70%;
+            right: 20%;
+            animation-duration: 14s;
+            animation-delay: 0.7s;
+            opacity: 0.22;
+          "
+          >✦</span
+        >
+        <span
+          class="deco-shape gold"
+          style="
+            font-size: 16px;
+            top: 30%;
+            left: 8%;
+            animation-duration: 9s;
+            animation-delay: 1.6s;
+          "
+          >✧</span
+        >
+        <span
+          class="deco-shape red"
+          style="
+            font-size: 22px;
+            top: 65%;
+            left: 5%;
+            animation-duration: 13s;
+            animation-delay: 2.4s;
+            opacity: 0.2;
+          "
+          >🎫</span
+        >
+        <div
+          class="deco-ring-outline"
+          style="
+            width: 260px;
+            height: 260px;
+            bottom: -100px;
+            right: -70px;
+            color: var(--gold-400);
+          "
+        ></div>
+      </div>
+      <div class="container reveal-scale">
         <h2>جاهز تفتح باب الطلاقة؟</h2>
         <p>احجز تذكرة الـ Practice Booth دلوقتي وابدأ رحلتك مع YouSpeak.</p>
         <div class="contact-row">
@@ -1855,12 +2717,14 @@
 
         switchMethod(document.querySelector('.co-tab[data-method="instapay"]'));
         overlay.classList.add("open");
+        requestAnimationFrame(() => overlay.classList.add("show"));
         document.body.style.overflow = "hidden";
       }
 
       function closeCheckout() {
-        overlay.classList.remove("open");
+        overlay.classList.remove("show");
         document.body.style.overflow = "";
+        setTimeout(() => overlay.classList.remove("open"), 200);
       }
 
       document.addEventListener("keydown", (e) => {
@@ -1899,14 +2763,18 @@
       // ---- Mobile menu ----
       const toggleBtn = document.querySelector(".nav-toggle");
       const navLinks = document.querySelector(".nav-links");
-      toggleBtn.addEventListener("click", () =>
-        navLinks.classList.toggle("open"),
-      );
+      toggleBtn.addEventListener("click", () => {
+        navLinks.classList.toggle("open");
+        toggleBtn.classList.toggle("open");
+      });
       navLinks.querySelectorAll("a").forEach((a) => {
-        a.addEventListener("click", () => navLinks.classList.remove("open"));
+        a.addEventListener("click", () => {
+          navLinks.classList.remove("open");
+          toggleBtn.classList.remove("open");
+        });
       });
 
-      // ---- Pricing plan monthly / 3-month toggle ----
+      // ---- Pricing plan monthly / 3-month toggle (with flip micro-animation) ----
       document.querySelectorAll(".price-block").forEach((block) => {
         const m1 = block.dataset.m1;
         const m3 = block.dataset.m3;
@@ -1921,17 +2789,21 @@
           tabs.forEach((t) =>
             t.classList.toggle("active", t.dataset.mode === mode),
           );
-          if (mode === "3") {
-            priceEl.textContent = m3;
-            saveEl.style.display = "inline-block";
-            saveEl.textContent = "وفّر " + save3 + " جنيه";
-            oldRow.innerHTML =
-              '<span class="old latin">' + old3 + " جنيه</span>";
-          } else {
-            priceEl.textContent = m1;
-            saveEl.style.display = "none";
-            oldRow.innerHTML = "";
-          }
+          priceEl.classList.add("flip");
+          setTimeout(() => {
+            if (mode === "3") {
+              priceEl.textContent = m3;
+              saveEl.style.display = "inline-block";
+              saveEl.textContent = "وفّر " + save3 + " جنيه";
+              oldRow.innerHTML =
+                '<span class="old latin">' + old3 + " جنيه</span>";
+            } else {
+              priceEl.textContent = m1;
+              saveEl.style.display = "none";
+              oldRow.innerHTML = "";
+            }
+            priceEl.classList.remove("flip");
+          }, 140);
         }
 
         tabs.forEach((tab) =>
@@ -1940,12 +2812,43 @@
         render("3");
       });
 
+      // ---- Button cursor-follow highlight ----
+      document.querySelectorAll(".btn-primary").forEach((btn) => {
+        btn.addEventListener("pointermove", (e) => {
+          const r = btn.getBoundingClientRect();
+          btn.style.setProperty("--mx", e.clientX - r.left + "px");
+          btn.style.setProperty("--my", e.clientY - r.top + "px");
+        });
+      });
+
+      // ---- Scroll progress bar ----
+      const scrollBar = document.getElementById("scrollBar");
+      function updateScrollBar() {
+        const h = document.documentElement;
+        const scrolled = h.scrollTop;
+        const height = h.scrollHeight - h.clientHeight;
+        scrollBar.style.width =
+          height > 0 ? (scrolled / height) * 100 + "%" : "0%";
+      }
+      document.addEventListener("scroll", updateScrollBar, { passive: true });
+      updateScrollBar();
+
+      // ---- Sticky header shadow on scroll ----
+      const siteHeader = document.getElementById("siteHeader");
+      function updateHeaderShadow() {
+        siteHeader.classList.toggle("scrolled", window.scrollY > 8);
+      }
+      document.addEventListener("scroll", updateHeaderShadow, {
+        passive: true,
+      });
+      updateHeaderShadow();
+
       // ---- Highlight active section in nav while scrolling ----
       const sections = ["booth", "pricing", "testimonials", "contact"]
         .map((id) => document.getElementById(id))
         .filter(Boolean);
       const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
-      const observer = new IntersectionObserver(
+      const navObserver = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
@@ -1959,7 +2862,43 @@
         },
         { rootMargin: "-45% 0px -50% 0px" },
       );
-      sections.forEach((sec) => observer.observe(sec));
+      sections.forEach((sec) => navObserver.observe(sec));
+
+      // ---- Scroll-triggered reveal animations ----
+      const revealTargets = document.querySelectorAll(
+        ".reveal, .reveal-scale, .reveal-left, .reveal-right, .stagger, .stars-row, .why-list",
+      );
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in-view");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
+      );
+      revealTargets.forEach((el) => revealObserver.observe(el));
+
+      // ---- Floating gold sparks in the hero door scene ----
+      const doorScene = document.querySelector(".door-scene");
+      if (
+        doorScene &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        function spawnSpark() {
+          const spark = document.createElement("span");
+          spark.className = "spark";
+          const x = 30 + Math.random() * 40;
+          spark.style.right = x + "%";
+          spark.style.bottom = 20 + Math.random() * 20 + "%";
+          spark.style.animationDuration = 3.5 + Math.random() * 2.5 + "s";
+          doorScene.appendChild(spark);
+          setTimeout(() => spark.remove(), 6000);
+        }
+        setInterval(spawnSpark, 700);
+      }
     </script>
   </body>
 </html>
