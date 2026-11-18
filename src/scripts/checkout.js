@@ -1,122 +1,204 @@
 // ==========================================================
-// Checkout modal + WhatsApp payment flow.
-//
-// NOTE: the checkout markup uses inline onclick="..." attributes
-// (see src/partials/checkout-modal.html and pricing.html), so the
-// functions below are attached to `window` at the bottom of this
-// file. If you later refactor those partials to use
-// addEventListener instead of inline onclick, you can drop the
-// window.* assignments.
+// Checkout modal + WhatsApp payment flow
+// Monthly-only pricing version
 // ==========================================================
 
-// ---- Payment contact details (update with real handle / number) ----
+// ---- Payment contact details ----
 const PAYMENT_INFO = {
-  whatsapp: "201500263132", // real WhatsApp number
-  instapay: "YouSpeakAcademy@instapay", // TODO: real Instapay handle
-  vodafone: "010XXXXXXXX", // TODO: real Vodafone Cash number
+  whatsapp: "201500263132",
+  instapay: "YouSpeakAcademy@instapay",
+  vodafone: "010XXXXXXXX",
 };
 
 let overlay;
 let currentMethod = "instapay";
 
+// ---- Generate order code ----
 function genOrderCode() {
   const rand = Math.floor(1000 + Math.random() * 9000);
   const d = new Date();
+
   const stamp =
     (d.getMonth() + 1).toString().padStart(2, "0") +
     d.getDate().toString().padStart(2, "0");
+
   return "YS-" + stamp + "-" + rand;
 }
 
-// ---- Direct WhatsApp inquiry when a plan is selected ----
-function openWhatsAppInquiry(btn) {
+// ---- Get plan information ----
+function getPlanInfo(btn) {
   const ticket = btn.closest(".ticket");
-  const priceBlock = ticket.querySelector(".price-block");
-  const activeTab = priceBlock.querySelector(".price-tab.active");
-  const mode = activeTab.dataset.mode;
-  const price = mode === "3" ? priceBlock.dataset.m3 : priceBlock.dataset.m1;
-  const duration = mode === "3" ? "3 أشهر" : "شهر واحد";
-  const planName = btn.dataset.plan;
 
-  const msg =
-    'السلام عليكم، حابة أعرف تفاصيل أكتر عن خطة "' +
-    planName +
-    '" (' +
-    duration +
-    ") بسعر " +
-    price +
-    " جنيه.";
-  const url =
-    "https://wa.me/" + PAYMENT_INFO.whatsapp + "?text=" + encodeURIComponent(msg);
-  window.open(url, "_blank", "noopener");
+  if (!ticket) {
+    console.error("Plan ticket not found.");
+    return null;
+  }
+
+  const priceElement = ticket.querySelector(".js-price, .new");
+  const priceBlock = ticket.querySelector(".price-block");
+
+  const price =
+    priceElement?.textContent.trim() || priceBlock?.dataset.m1 || "";
+
+  const planName = btn.dataset.plan || "الخطة المختارة";
+
+  if (!price) {
+    console.error("Plan price not found.");
+    return null;
+  }
+
+  return {
+    planName,
+    price,
+    duration: "شهر واحد",
+  };
 }
 
-// ---- Checkout modal (currently not linked from any button — see README) ----
-function openCheckout(btn) {
-  const ticket = btn.closest(".ticket");
-  const priceBlock = ticket.querySelector(".price-block");
-  const activeTab = priceBlock.querySelector(".price-tab.active");
-  const mode = activeTab.dataset.mode;
-  const price = mode === "3" ? priceBlock.dataset.m3 : priceBlock.dataset.m1;
-  const duration = mode === "3" ? "3 أشهر" : "شهر واحد";
-  const planName = btn.dataset.plan;
-  const orderCode = genOrderCode();
+// ---- Direct WhatsApp inquiry ----
+function openWhatsAppInquiry(btn) {
+  const plan = getPlanInfo(btn);
 
-  document.querySelector(".co-plan").textContent = planName;
-  document.querySelector(".co-price").textContent = price + " جنيه";
-  document.querySelector(".co-duration").textContent = "(" + duration + ")";
-  document.querySelector(".co-code").textContent = orderCode;
-  document
-    .querySelectorAll(".co-price-inline")
-    .forEach((el) => (el.textContent = price));
-  document.querySelector(".co-code-inline").textContent = orderCode;
-
-  document.getElementById("instapayHandle").textContent = PAYMENT_INFO.instapay;
-  document.getElementById("vodafoneNumber").textContent = PAYMENT_INFO.vodafone;
+  if (!plan) return;
 
   const msg =
-    'السلام عليكم، عايزة أأكد حجز خطة "' +
-    planName +
+    'السلام عليكم، حابب أعرف تفاصيل أكتر عن خطة "' +
+    plan.planName +
     '" (' +
-    duration +
-    ") بمبلغ " +
-    price +
-    " جنيه.\nرقم الطلب: " +
-    orderCode +
-    "\nهبعت إيصال التحويل دلوقتي.";
-  document.getElementById("coConfirmBtn").href =
-    "https://wa.me/" + PAYMENT_INFO.whatsapp + "?text=" + encodeURIComponent(msg);
+    plan.duration +
+    ") بسعر " +
+    plan.price +
+    " جنيه.";
 
-  switchMethod(document.querySelector('.co-tab[data-method="instapay"]'));
+  const url =
+    "https://wa.me/" +
+    PAYMENT_INFO.whatsapp +
+    "?text=" +
+    encodeURIComponent(msg);
+
+  window.open(url, "_blank", "noopener,noreferrer");
+}
+
+// ---- Checkout modal ----
+function openCheckout(btn) {
+  const plan = getPlanInfo(btn);
+
+  if (!plan) return;
+
+  if (!overlay) {
+    overlay = document.getElementById("checkoutOverlay");
+  }
+
+  if (!overlay) {
+    console.error("Checkout modal not found.");
+    return;
+  }
+
+  const orderCode = genOrderCode();
+
+  document.querySelector(".co-plan").textContent = plan.planName;
+  document.querySelector(".co-price").textContent = plan.price + " جنيه";
+
+  document.querySelector(".co-duration").textContent =
+    "(" + plan.duration + ")";
+
+  document.querySelector(".co-code").textContent = orderCode;
+
+  document.querySelectorAll(".co-price-inline").forEach((el) => {
+    el.textContent = plan.price;
+  });
+
+  const inlineCode = document.querySelector(".co-code-inline");
+
+  if (inlineCode) {
+    inlineCode.textContent = orderCode;
+  }
+
+  const instapay = document.getElementById("instapayHandle");
+  const vodafone = document.getElementById("vodafoneNumber");
+
+  if (instapay) instapay.textContent = PAYMENT_INFO.instapay;
+  if (vodafone) vodafone.textContent = PAYMENT_INFO.vodafone;
+
+  const confirmBtn = document.getElementById("coConfirmBtn");
+
+  if (confirmBtn) {
+    const msg =
+      'السلام عليكم، عايز أأكد حجز خطة "' +
+      plan.planName +
+      '" (' +
+      plan.duration +
+      ") بمبلغ " +
+      plan.price +
+      " جنيه.\nرقم الطلب: " +
+      orderCode +
+      "\nهبعت إيصال التحويل دلوقتي.";
+
+    confirmBtn.href =
+      "https://wa.me/" +
+      PAYMENT_INFO.whatsapp +
+      "?text=" +
+      encodeURIComponent(msg);
+  }
+
+  const instapayTab = document.querySelector('.co-tab[data-method="instapay"]');
+
+  if (instapayTab) {
+    switchMethod(instapayTab);
+  }
+
   overlay.classList.add("open");
-  requestAnimationFrame(() => overlay.classList.add("show"));
+
+  requestAnimationFrame(() => {
+    overlay.classList.add("show");
+  });
+
   document.body.style.overflow = "hidden";
 }
 
+// ---- Close checkout ----
 function closeCheckout() {
+  if (!overlay) return;
+
   overlay.classList.remove("show");
   document.body.style.overflow = "";
-  setTimeout(() => overlay.classList.remove("open"), 200);
+
+  setTimeout(() => {
+    overlay.classList.remove("open");
+  }, 200);
 }
 
+// ---- Switch payment method ----
 function switchMethod(tab) {
+  if (!tab) return;
+
   currentMethod = tab.dataset.method;
-  document
-    .querySelectorAll(".co-tab")
-    .forEach((t) => t.classList.toggle("active", t === tab));
-  document.querySelectorAll("[data-method-panel]").forEach((p) => {
-    p.style.display = p.dataset.methodPanel === currentMethod ? "block" : "none";
+
+  document.querySelectorAll(".co-tab").forEach((t) => {
+    t.classList.toggle("active", t === tab);
+  });
+
+  document.querySelectorAll("[data-method-panel]").forEach((panel) => {
+    panel.style.display =
+      panel.dataset.methodPanel === currentMethod ? "block" : "none";
   });
 }
 
+// ---- Copy payment information ----
 function copyValue(elId, btn) {
-  const text = document.getElementById(elId).textContent.trim();
+  const element = document.getElementById(elId);
+
+  if (!element) return;
+
+  const text = element.textContent.trim();
+
   navigator.clipboard
     .writeText(text)
     .then(() => {
       const original = btn.textContent;
+
       btn.textContent = "اتنسخت ✓";
       btn.classList.add("copied");
+
       setTimeout(() => {
         btn.textContent = original;
         btn.classList.remove("copied");
@@ -127,6 +209,7 @@ function copyValue(elId, btn) {
     });
 }
 
+// ---- Initialize checkout ----
 export function initCheckout() {
   overlay = document.getElementById("checkoutOverlay");
 
@@ -134,8 +217,7 @@ export function initCheckout() {
     if (e.key === "Escape") closeCheckout();
   });
 
-  // Expose to window so inline onclick="..." attributes in the
-  // partials can still call these functions.
+  // Expose functions for inline HTML onclick attributes.
   window.openWhatsAppInquiry = openWhatsAppInquiry;
   window.openCheckout = openCheckout;
   window.closeCheckout = closeCheckout;
